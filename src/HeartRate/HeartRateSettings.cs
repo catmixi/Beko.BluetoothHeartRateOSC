@@ -28,6 +28,8 @@ public class HeartRateSettings
     public ContentAlignment UITextAlignment;
     public int AlertLevel;
     public int WarnLevel;
+    public int HeartRateRangeMin;
+    public int HeartRateRangeMax;
     public TimeSpan AlertTimeout;
     public TimeSpan DisconnectedTimeout;
     public Color Color;
@@ -63,6 +65,8 @@ public class HeartRateSettings
             UITextAlignment = ContentAlignment.MiddleCenter,
             WarnLevel = 650,
             AlertLevel = 700,
+            HeartRateRangeMin = 80,
+            HeartRateRangeMax = 160,
             AlertTimeout = TimeSpan.FromMinutes(2),
             DisconnectedTimeout = TimeSpan.FromSeconds(10),
             Color = Color.LightBlue,
@@ -105,6 +109,8 @@ public class HeartRateSettings
         UITextAlignment = EnumOrDefault(protocol.UITextAlignment, ContentAlignment.MiddleCenter);
         AlertLevel = protocol.AlertLevel;
         WarnLevel = protocol.WarnLevel;
+        HeartRateRangeMin = protocol.HeartRateRangeMin;
+        HeartRateRangeMax = protocol.HeartRateRangeMax;
         AlertTimeout = TimeSpan.FromMilliseconds(protocol.AlertTimeout);
         DisconnectedTimeout = TimeSpan.FromMilliseconds(protocol.DisconnectedTimeout);
         Color = ColorFromString(protocol.Color);
@@ -154,6 +160,8 @@ public class HeartRateSettings
             UITextAlignment = UITextAlignment,
             AlertLevel = AlertLevel,
             WarnLevel = WarnLevel,
+            HeartRateRangeMin = HeartRateRangeMin,
+            HeartRateRangeMax = HeartRateRangeMax,
             AlertTimeout = AlertTimeout,
             DisconnectedTimeout = DisconnectedTimeout,
             Color = Color,
@@ -240,6 +248,8 @@ public class HeartRateSettingsProtocol
     public string UITextAlignment { get; set; }
     public int AlertLevel { get; set; }
     public int WarnLevel { get; set; }
+    public int HeartRateRangeMin { get; set; }
+    public int HeartRateRangeMax { get; set; }
     public int AlertTimeout { get; set; }
     public int DisconnectedTimeout { get; set; }
     public string Color { get; set; }
@@ -274,6 +284,8 @@ public class HeartRateSettingsProtocol
         UIWindowSizeY = settings.UIWindowSizeY;
         UITextAlignment = settings.UITextAlignment.ToString();
         WarnLevel = settings.WarnLevel;
+        HeartRateRangeMin = settings.HeartRateRangeMin;
+        HeartRateRangeMax = settings.HeartRateRangeMax;
         AlertTimeout = (int)settings.AlertTimeout.TotalMilliseconds;
         DisconnectedTimeout = (int)settings.DisconnectedTimeout.TotalMilliseconds;
         Color = ColorToString(settings.Color);
