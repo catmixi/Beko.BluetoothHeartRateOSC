@@ -10,6 +10,8 @@ This writes 2 parameters to VRChat:
 
 If you're using something other than the default port for VRChat, you can change what port to send to in the settings file, under `VRChatPort`. Default is `9000`.
 
+![ingame-screenshot-debug](https://github.com/AkaiMage/BluetoothHeartRateOSC/raw/master/heartrateosc.png)
+
 Original Readme
 ---------------
 
