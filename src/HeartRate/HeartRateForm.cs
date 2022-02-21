@@ -38,6 +38,9 @@ public partial class HeartRateForm : Form
     private HeartRateFile _hrfile;
     private HeartRateSettings _lastSettings;
 
+    // Lazily initialized OSC sender.
+    private SharpOSC.UDPSender _udpsender;
+
     private string _iconText;
     private readonly Queue<Font> _lastFonts = new();
     private IntPtr _oldIconHandle;
@@ -147,6 +150,11 @@ public partial class HeartRateForm : Form
 
     private void Service_HeartRateUpdatedCore(HeartRateReading reading)
     {
+        if (_udpsender == null)
+        {
+            _udpsender = new SharpOSC.UDPSender("127.0.0.1", _settings.VRChatPort);
+        }
+
         _log?.Reading(reading);
         _ibi?.Reading(reading);
         _hrfile?.Reading(reading);
@@ -156,6 +164,21 @@ public partial class HeartRateForm : Form
 
         var isDisconnected = bpm == 0 ||
             status == ContactSensorStatus.NoContact;
+
+        if (reading.IsError || isDisconnected)
+        {
+            _udpsender.Send(new SharpOSC.OscMessage("/avatar/parameters/HeartRateBPM", 0));
+            _udpsender.Send(new SharpOSC.OscMessage("/avatar/parameters/HeartRateRangeFactor", 0.0f));
+        }
+        else
+        {
+            float heartRateRangeFactor = 
+               (bpm <= _settings.HeartRateRangeMin) ? 0f
+             : (bpm >= _settings.HeartRateRangeMax) ? 1f
+             : (bpm - _settings.HeartRateRangeMin) / (float)(_settings.HeartRateRangeMax - _settings.HeartRateRangeMin);
+            _udpsender.Send(new SharpOSC.OscMessage("/avatar/parameters/HeartRateBPM", bpm));
+            _udpsender.Send(new SharpOSC.OscMessage("/avatar/parameters/HeartRateRangeFactor", heartRateRangeFactor));
+        }
 
         var iconText = bpm.ToString();
 
@@ -335,6 +358,7 @@ public partial class HeartRateForm : Form
                 _measurementFont.TryDispose();
                 _iconStringFormat.TryDispose();
                 _watchdog.TryDispose();
+                _udpsender?.Close();
             }
         }
 

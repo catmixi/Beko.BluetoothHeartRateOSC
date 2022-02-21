@@ -28,6 +28,7 @@ public class HeartRateSettings
     public ContentAlignment UITextAlignment;
     public int AlertLevel;
     public int WarnLevel;
+    public int VRChatPort;
     public int HeartRateRangeMin;
     public int HeartRateRangeMax;
     public TimeSpan AlertTimeout;
@@ -65,6 +66,8 @@ public class HeartRateSettings
             UITextAlignment = ContentAlignment.MiddleCenter,
             WarnLevel = 0,
             AlertLevel = 0,
+            // VRChat receives on 9000 by default.
+            VRChatPort = 9000,
             HeartRateRangeMin = 80,
             HeartRateRangeMax = 160,
             AlertTimeout = TimeSpan.FromMinutes(2),
@@ -109,6 +112,7 @@ public class HeartRateSettings
         UITextAlignment = EnumOrDefault(protocol.UITextAlignment, ContentAlignment.MiddleCenter);
         AlertLevel = protocol.AlertLevel;
         WarnLevel = protocol.WarnLevel;
+        VRChatPort = protocol.VRChatPort;
         HeartRateRangeMin = protocol.HeartRateRangeMin;
         HeartRateRangeMax = protocol.HeartRateRangeMax;
         AlertTimeout = TimeSpan.FromMilliseconds(protocol.AlertTimeout);
@@ -160,6 +164,7 @@ public class HeartRateSettings
             UITextAlignment = UITextAlignment,
             AlertLevel = AlertLevel,
             WarnLevel = WarnLevel,
+            VRChatPort = VRChatPort,
             HeartRateRangeMin = HeartRateRangeMin,
             HeartRateRangeMax = HeartRateRangeMax,
             AlertTimeout = AlertTimeout,
@@ -248,6 +253,7 @@ public class HeartRateSettingsProtocol
     public string UITextAlignment { get; set; }
     public int AlertLevel { get; set; }
     public int WarnLevel { get; set; }
+    public int VRChatPort { get; set; }
     public int HeartRateRangeMin { get; set; }
     public int HeartRateRangeMax { get; set; }
     public int AlertTimeout { get; set; }
@@ -284,6 +290,7 @@ public class HeartRateSettingsProtocol
         UIWindowSizeY = settings.UIWindowSizeY;
         UITextAlignment = settings.UITextAlignment.ToString();
         WarnLevel = settings.WarnLevel;
+        VRChatPort = settings.VRChatPort;
         HeartRateRangeMin = settings.HeartRateRangeMin;
         HeartRateRangeMax = settings.HeartRateRangeMax;
         AlertTimeout = (int)settings.AlertTimeout.TotalMilliseconds;
