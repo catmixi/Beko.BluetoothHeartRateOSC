@@ -1,5 +1,17 @@
-Heart rate monitor
-==================
+BluetoothHeartRateOSC
+=====================
+Bluetooth Heart Rate reading program that writes to VRChat OSC.
+I'm using a [cheap, $30 Coospo HRM](https://www.amazon.com/CooSpo-Fitness-Tracker-Waterproof-Bluetooth/dp/B07BS6B4PD) for this.
+Settings are stored in the executable's directory, under `settings.xml`.
+
+This writes 2 parameters to VRChat:
+- `/avatar/parameters/HeartRateBPM`: an `Int` with the current BPM reading.
+- `/avatar/parameters/HeartRateRangeFactor`: a `Float` between 0 and 1, representing a linear factor between two configurable heartrate BPMs. By default, this measures how far your BPM is between 80 and 160, so i.e. `BPM = 120` would give `0.5`. This range can be configured in the settings file, under `HeartRateRangeMin` and `HeartRateRangeMax`. This range is clamped, so anything less than min is `0.0` and anything higher than max is `1.0`.
+
+If you're using something other than the default port for VRChat, you can change what port to send to in the settings file, under `VRChatPort`. Default is `9000`.
+
+Original Readme
+---------------
 
 A lightweight program to display the heart rate reading from a
 [Bluetooth Low Energy device](https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile=org.bluetooth.characteristic.heart_rate_measurement.xml).
@@ -14,7 +26,7 @@ Requires Windows 8.1 or newer.
 
 The executable and code are released under MIT license.
 
-Code can be built using [Visual Studio Community 2019](https://visualstudio.microsoft.com/vs/).
+Code can be built using [Visual Studio Community 2022](https://visualstudio.microsoft.com/vs/).
 
 Motivation
 ----------
@@ -93,7 +105,6 @@ settings file directly.
 *Options not inside the UI*
 Right clicking the system tray icon gives the option to edit an XML settings
 file. When the editor is closed, the settings will be reloaded automatically.
-The file is `%appdata%\HeartRate\settings.xml`
 
 | Setting    | Type | Default  | Description |
 |------------|------|----------|-------------|
