@@ -194,11 +194,8 @@ public class HeartRateSettings
 
     private static string GetSettingsDir()
     {
-        var dataPath = Environment.ExpandEnvironmentVariables("%appdata%");
-
-        if (string.IsNullOrEmpty(dataPath)) return null;
-
-        return Path.Combine(dataPath, "HeartRate");
+        var exePath = System.Reflection.Assembly.GetExecutingAssembly().Location;
+        return Path.GetDirectoryName(exePath);
     }
 
     public static string GetSettingsFile(string filename)
