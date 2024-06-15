@@ -167,17 +167,17 @@ public partial class HeartRateForm : Form
 
         if (reading.IsError || isDisconnected)
         {
-            _udpsender.Send(new SharpOSC.OscMessage("/avatar/parameters/HeartRateBPM", 0));
-            _udpsender.Send(new SharpOSC.OscMessage("/avatar/parameters/HeartRateRangeFactor", 0.0f));
+            _udpsender.Send(new SharpOSC.OscMessage("/avatar/parameters/" + _settings.HRIntAddress, 0));
+            _udpsender.Send(new SharpOSC.OscMessage("/avatar/parameters/" + _settings.HRFloatAddress, 0.0f));
         }
         else
         {
-            float heartRateRangeFactor = 
+            float heartRateRangeFactor =
                (bpm <= _settings.HeartRateRangeMin) ? 0f
              : (bpm >= _settings.HeartRateRangeMax) ? 1f
              : (bpm - _settings.HeartRateRangeMin) / (float)(_settings.HeartRateRangeMax - _settings.HeartRateRangeMin);
-            _udpsender.Send(new SharpOSC.OscMessage("/avatar/parameters/HeartRateBPM", bpm));
-            _udpsender.Send(new SharpOSC.OscMessage("/avatar/parameters/HeartRateRangeFactor", heartRateRangeFactor));
+            _udpsender.Send(new SharpOSC.OscMessage("/avatar/parameters/" + _settings.HRIntAddress, bpm));
+            _udpsender.Send(new SharpOSC.OscMessage("/avatar/parameters/" + _settings.HRFloatAddress, heartRateRangeFactor));
         }
 
         var iconText = bpm.ToString();

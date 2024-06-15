@@ -46,6 +46,8 @@ public class HeartRateSettings
     public string LogFile;
     public string IBIFile;
     public string HeartRateFile;
+    public string HRIntAddress;
+    public string HRFloatAddress;
 
     public HeartRateSettings(string filename)
     {
@@ -54,7 +56,8 @@ public class HeartRateSettings
 
     public static HeartRateSettings CreateDefault(string filename)
     {
-        return new HeartRateSettings(filename) {
+        return new HeartRateSettings(filename)
+        {
             Version = _settingsVersion,
             FontName = "Arial",
             UIFontName = "Arial",
@@ -84,7 +87,9 @@ public class HeartRateSettings
             LogDateFormat = DateTimeFormatter.DefaultColumn,
             LogFile = " ", // Initialize to " " instead of null so the entry is still written.
             IBIFile = " ",
-            HeartRateFile = " "
+            HeartRateFile = " ",
+            HRIntAddress = "HR",
+            HRFloatAddress = "HRPercent",
         };
     }
 
@@ -130,6 +135,8 @@ public class HeartRateSettings
         LogFile = protocol.LogFile;
         IBIFile = protocol.IBIFile;
         HeartRateFile = protocol.HeartRateFile;
+        HRIntAddress = protocol.HRIntAddress;
+        HRFloatAddress = protocol.HRFloatAddress;
 
         // A hack fix from a bug that's been fixed.
         if (UITextAlignment == 0) UITextAlignment = ContentAlignment.MiddleCenter;
@@ -268,6 +275,9 @@ public class HeartRateSettingsProtocol
     public string LogFile { get; set; }
     public string IBIFile { get; set; }
     public string HeartRateFile { get; set; }
+    public string HRIntAddress { get; set; }
+    public string HRFloatAddress { get; set; }
+
     // ReSharper restore AutoPropertyCanBeMadeGetOnly.Global
 
     // Required by deserializer.
@@ -305,6 +315,8 @@ public class HeartRateSettingsProtocol
         LogFile = settings.LogFile ?? " ";
         IBIFile = settings.IBIFile ?? " ";
         HeartRateFile = settings.HeartRateFile ?? " ";
+        HRIntAddress = settings.HRIntAddress;
+        HRFloatAddress = settings.HRFloatAddress;
     }
 
     private static string ColorToString(Color color)
